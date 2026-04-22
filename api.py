@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-
+from mangum import Mangum
 from predict import predict
 
 app = FastAPI(title="Intent Service")
@@ -24,4 +24,5 @@ def intent_endpoint(payload: IntentRequest) -> IntentResponse:
 @app.get("/health")
 def health() -> dict:
     return {"ok": True}
-
+    
+handler = Mangum(app)
