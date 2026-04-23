@@ -4,13 +4,7 @@ import os
 import numpy as np
 from sentence_transformers import SentenceTransformer
 
-model = None
-
-def get_model():
-    global model
-    if model is None:
-        model = SentenceTransformer("all-MiniLM-L6-v2")
-    return model
+model = SentenceTransformer("all-MiniLM-L6-v2")
 
 intents_path = os.path.join(os.path.dirname(__file__), "intents.json")
 with open(intents_path, "r", encoding="utf-8") as f:
@@ -20,9 +14,8 @@ intents = data["intents"]
 
 intent_vectors = {}
 intent_centroids = {}
-model_instance = get_model()
 for intent, sentences in intents.items():
-    vectors = model_instance.encode(sentences, normalize_embeddings=True)
+    vectors = model.encode(sentences, normalize_embeddings=True)
     intent_vectors[intent] = [np.array(v) for v in vectors]
     stack = np.stack(intent_vectors[intent], axis=0)
     c = stack.mean(axis=0)

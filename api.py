@@ -23,9 +23,5 @@ def intent_endpoint(payload: IntentRequest) -> IntentResponse:
 @app.get("/health")
 def health() -> dict:
     return {"ok": True}
-
-@app.get("/")
-def root():
-    return {"status": "ok"}
     
 
