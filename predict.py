@@ -2,7 +2,7 @@ import os
 import re
 from typing import List, Optional, Tuple
 
-from loader import intent_centroids, intent_vectors, model
+from loader import intent_centroids, intent_vectors, get_model
 from similarity import cosine_similarity
 
 # Below this cosine score, return "none" (reduces wrong intent on random/noisy speech).
@@ -219,7 +219,7 @@ def predict(text: str):
 
     if _negates_opening_navigation(text) and _has_navigation_keyword(text):
         return "none", 1.0
-
+    model = get_model()
     text_vector = model.encode([text], normalize_embeddings=True)[0]
     ranked = _rank_intents(text_vector)
 

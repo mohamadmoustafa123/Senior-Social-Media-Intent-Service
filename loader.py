@@ -4,7 +4,13 @@ import os
 import numpy as np
 from sentence_transformers import SentenceTransformer
 
-model = SentenceTransformer("all-MiniLM-L6-v2")
+model = None
+
+def get_model():
+    global model
+    if model is None:
+        model = SentenceTransformer("all-MiniLM-L6-v2")
+    return model
 
 intents_path = os.path.join(os.path.dirname(__file__), "intents.json")
 with open(intents_path, "r", encoding="utf-8") as f:
